@@ -37,7 +37,7 @@ Okay cool, now we just need to configure TypeScript to enable the decorator by c
 ```
 _./tsconfig.json_
 
-# The first step: the definitions of types 🚻
+# The definitions of types 🚻
 Okay then let's start by creating our `User` class, which we'll have to decorate with `@ObjectType()`:
 ```typescript
 import { ObjectType, Field } from "rakkit";
