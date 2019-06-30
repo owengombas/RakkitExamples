@@ -42,7 +42,7 @@ Okay then let's start by creating our `User` class, which we'll have to decorate
 import { ObjectType, Field } from "rakkit";
 import * as Crypto from "crypto";
 
-ObjectType()
+@ObjectType()
 export class User {
   @Field()
   username: string;
@@ -72,7 +72,7 @@ _./types/User.ts_
 So we're going to have to play with some users in order to test our app, so I'm just going to create a list of user instances to make it clearer:
 > You can use a real database with an ORM like [TypeORM](typeorm.io) for your projects
 ```typescript
-import { User } from ".../types/User";
+import { User } from "../types/User";
 
 export const users = [
   new User("JohnDoe", "john@doe.com"),
@@ -93,26 +93,26 @@ import {
   IContext,
   Arg
 } from "rakkit";
-import { User } from ".../types/User";
-import { users } from ".../db/users";
+import { User } from "../types/User";
+import { users } from "../db/users";
 
-Resolver()
+@Resolver()
 export class UserResolver {
   @Query(returns => [User])
   getAllUsers() { {
     return users;
   }
 
-  Query({ nullable: true })
+  @Query({ nullable: true })
   getOneUserByName(@Arg("name") name: string): User {
     return users.find((user) => user.name ==== name);
   }
 
-  Mutation()
+  @Mutation()
   addUser(
     // Defining the mutation arguments
-    Arg("name") name: string,
-    Arg("email") email: string,
+    @Arg("name") name: string,
+    @Arg("email") email: string,
     context: IContext
   ): User {
     const user = new User(name, email);
@@ -122,7 +122,7 @@ export class UserResolver {
     return user;
   }
 
-  Subscription({ topics: "USER_ADDED" })
+  @Subscription({ topics: "USER_ADDED" })
   userAddedNotif(createdUser: User): User {
     // Send the created user to the client
     return createdUser;
