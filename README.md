@@ -1,19 +1,18 @@
 # What?
 **Okay then, this is related to my [previous article about Rakkit](https://dev.to/owen/rakkit-create-your-graphql-and-rest-apis-with-typescript-and-decorators-cnj). So I'll advise you to go take a look around 😊.**  
-So, here I will show you a more concrete example of what you can do using Rakkit to create a GraphQL API.
-We will take a very simple example, with a user management system.
+So, here I will show you a more concrete example of what you can do using Rakkit to create a GraphQL API with a user management system.
 
 # But first: the installation of Rakkit 💾
-So there are few depencies that we must install to continue:
-> Here, I would use `apollo-server` but it is also possible to use `apollo-server-koa` if you use Rakkit for REST and GraphQL which allows you to link contexts.
+So there are few dependencies that we must install to continue:
+> Here, I would use `apollo-server` but it's also possible to install `apollo-server-koa` if you use Rakkit for REST and GraphQL which allows you to link contexts.
 
-Just run this commands to install to install the required dependencies:
+Just run this command to install the required dependencies:
 ```sh
 npm i rakkit graphql @types/graphql apollo-server reflect-metadata
 ```
 > reflect-metadata allows us to use the decorators with TypeScript
 
-Okay cool, now we just need to configure TypeScript to enable the decorator by creating a _tsconfig.json_ file at the root of the project, containing this: 
+Okay cool, now we just need to configure TypeScript to enable the decorators by creating a _tsconfig.json_ file at the root of the project, containing this: 
 ```json
 {
   "compileOptions": {
@@ -84,7 +83,7 @@ export const users = [
 _./db/users.ts_
 
 # Resolver (Query, Mutation, Subscription) 🚀
-It is in the following class that we will define the class allowing us to create our query/mutation/subscription. We will only need a simple CRUD and a subscription to be notified when a user is registered:
+It is in the following class that we will define our query/mutation/subscription. It will contain a simple CRUD and a subscription to be notified when a user is registered:
 ```typescript
 import {
   Resolve,
@@ -119,7 +118,7 @@ export class UserResolver {
     const user = new User(name, email);
     users.push(user);
     // Publish the event for subscriptions with the created user
-    context.gql.pubSub.publish("USER_ADDED", user)
+    context.gql.pubSub.publish("USER_ADDED", user);
     return user;
   }
 
@@ -133,18 +132,22 @@ export class UserResolver {
 _./resolvers/UserResolver.ts_
 
 # The point of entry 🚪
-Now we need to have a point to enter our application:
+Now we need to have an entry point for our application:
 ```typescript
+// It allows us to use decorators:
 import "reflect-metadata";
+
 import { Rakkit } from "rakkit";
-import { ApolloServer } from "apollo-server"
+import { ApolloServer } from "apollo-server";
 
 async function bootstrap() {
   await Rakkit.start({
     gql: {
+      // You give an array of glob string:
       resolvers: [`${__dirname}/resolvers/*Resolver.ts`]
     }
   });
+  // Retrieve the GraphQL compiled schema:
   const schema = Rakkit.MetadataStorage.Gql.Schema;
 
   const server = new ApolloServer({
@@ -153,10 +156,12 @@ async function bootstrap() {
 
   server.listen();
 }
+
+bootstrap();
 ```
 _./bootstrap.ts_
 
-# Done, let's start and test it ! 🎉
+# Done, so let's start and test it ! 🎉
 To start it you must install `ts-node` globally to run directly your TypeScript app:
 ```sh
 npm i -g ts-node
@@ -179,4 +184,4 @@ And just go to [http://localhost:4000](http://localhost:4000) with your favorite
 **userAddedNotif** - Listen to the user creation event:
 ![](https://thepracticaldev.s3.amazonaws.com/i/8xt2lbt6zxg0a5ouo6eu.png)
 
-# Et voilà !
+**Et voilà! 😊**
