@@ -1,5 +1,5 @@
 # What?
-**Okay then, this is related to my [previous article about Rakkit](https://dev.to/owen/rakkit-create-your-graphql-and-rest-apis-with-typescript-and-decorators-cnj). So I'll advise you to go take a look around 😊.
+**Okay then, this is related to my [previous article about Rakkit](https://dev.to/owen/rakkit-create-your-graphql-and-rest-apis-with-typescript-and-decorators-cnj). So I'll advise you to go take a look around 😊.**
 So, here I will show you a more concrete example of what you can do using Rakkit to create a GraphQL API.
 We will take a very simple example, with a user management system.
 
