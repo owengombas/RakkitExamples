@@ -8,7 +8,7 @@ So there are few depencies that we must install to continue:
 > Here, I would use `apollo-server` but it is also possible to use `apollo-server-koa` if you use Rakkit for REST and GraphQL which allows you to link contexts.
 
 Just run this commands to install to install the required dependencies:
-````sh
+```sh
 npm i rakkit graphql @types/graphql apollo-server reflect-metadata
 ```
 > reflect-metadata allows us to use the decorators with TypeScript
@@ -39,7 +39,7 @@ _./tsconfig.json_
 
 # The first step: the definitions of types 🚻
 Okay then let's start by creating our `User` class, which we'll have to decorate with `@ObjectType()`:
-````typescript
+```typescript
 import { ObjectType, Field } from "rakkit";
 import * as Crypto from "crypto";
 
@@ -72,7 +72,7 @@ _./types/User.ts_
 # You need a small "database" 🗂
 So we're going to have to play with some users in order to test our app, so I'm just going to create a list of user instances to make it clearer:
 > You can use a real database with an ORM like [TypeORM](typeorm.io) for your projects
-````typescript
+```typescript
 import { User } from ".../types/User";
 
 export const users = [
@@ -85,7 +85,7 @@ _./db/users.ts_
 
 # Resolver (Query, Mutation, Subscription) 🚀
 It is in the following class that we will define the class allowing us to create our query/mutation/subscription. We will only need a simple CRUD and a subscription to be notified when a user is registered:
-````typescript
+```typescript
 import {
   Resolve,
   Query,
@@ -134,7 +134,7 @@ _./resolvers/UserResolver.ts_
 
 # The point of entry 🚪
 Now we need to have a point to enter our application:
-````typescript
+```typescript
 import "reflect-metadata";
 import { Rakkit } from "rakkit";
 import { ApolloServer } from "apollo-server"
